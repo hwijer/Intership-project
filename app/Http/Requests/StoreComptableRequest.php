@@ -11,7 +11,7 @@ class StoreComptableRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -21,8 +21,30 @@ class StoreComptableRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
-            //
+       return [
+            'first_name' => ['required', 'string', 'max:255'],
+            'last_name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'email', 'unique:users,email', 'unique:comptable,email'],
+            'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'phone_number' => ['nullable', 'string', 'max:50']
         ];
+    }
+
+    public function messages(): array
+    {
+        return [
+            'email.unique' => 'The email is already in use.',
+            'password.confirmed' => 'The password confirmation does not match.'
+        ];
+    }
+
+      protected function failedValidation(\Illuminate\Contracts\Validation\Validator $validator)
+    {
+        $response = response()->json([
+            'error' => 'Validation failed',
+            'messages' => $validator->errors(),
+        ], 422);
+
+        throw new \Illuminate\Validation\ValidationException($validator, $response);
     }
 }
