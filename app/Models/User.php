@@ -45,4 +45,13 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    public function payload(): array 
+    {
+        // $payload = Parent::payload();\
+        return [
+            'role' => $this->role_id,
+        ];
+    }
+
 }
