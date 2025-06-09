@@ -74,5 +74,18 @@ class User extends Authenticatable
         return $this->role && $this->role->id === 3; // 3 is the ID for 'entreprise_client'
     }
 
+    public function Admin() 
+    {
+        return $this->hasOne(Admin::class);
+    }
 
+    public function Comptable() 
+    {
+        return $this->hasOne(Comptable::class);
+    }
+    
+    public function EntrepriseClient() 
+    {
+        return $this->hasOne(EntrepriseClient::class);
+    }
 }
