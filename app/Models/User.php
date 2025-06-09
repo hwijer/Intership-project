@@ -6,11 +6,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Kyojin\JWT\Traits\HasJWT;
 
 class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable;
+    use HasFactory, Notifiable, HasJWT;
 
     /**
      * The attributes that are mass assignable.
@@ -83,7 +84,7 @@ class User extends Authenticatable
     {
         return $this->hasOne(Comptable::class);
     }
-    
+
     public function EntrepriseClient() 
     {
         return $this->hasOne(EntrepriseClient::class);
