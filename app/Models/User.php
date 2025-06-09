@@ -54,4 +54,25 @@ class User extends Authenticatable
         ];
     }
 
+    public function role()
+    {
+        return $this->belongsTo(Role::class, 'role_id');
+    }
+
+    public function isAdmin(): bool
+    {
+        return $this->role && $this->role->id === 1; // 1 is the ID for 'admin'
+    }
+
+    public function isComptable(): bool
+    {
+        return $this->role && $this->role->id === 2; // 2 is the ID for 'comptable'
+    }
+
+    public function isEntrepriseClient(): bool
+    {
+        return $this->role && $this->role->id === 3; // 3 is the ID for 'entreprise_client'
+    }
+
+
 }
